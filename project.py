@@ -5,6 +5,9 @@ import random
 import readline
 import subprocess
 from datetime import datetime
+from io import BytesIO
+from pathlib import Path, PurePath
+from captcha.audio import AudioCaptcha
 from captcha.image import ImageCaptcha
 
 
@@ -145,27 +148,29 @@ def captcha_reqs(s):
 
 def flag_reqs(s):
     validFlags = [
-        "🏴‍☠️", # Pirate flag; easter egg
-        "🇵🇦", # Panama
-        "🇵🇪", # Peru
-        "🇵🇫", # French Polynesia; country code starts with P
-        "🇵🇬", # Papua New Guinea
-        "🇵🇭", # Philippines
-        "🇵🇰", # Pakistan
-        "🇵🇱", # Poland
-        "🇵🇲", # St. Pierre & Miquelon; country code starts with P
-        "🇵🇳", # Pitcairn Islands
-        "🇵🇷", # Puerto Rico
-        "🇵🇸", # Palestinian Territories
-        "🇵🇹", # Portugal
-        "🇵🇼", # Palau
-        "🇵🇾", # Paraguay
+        "🏴‍☠️",  # Pirate flag; easter egg
+        "🇵🇦",  # Panama
+        "🇵🇪",  # Peru
+        "🇵🇫",  # French Polynesia; country code starts with P
+        "🇵🇬",  # Papua New Guinea
+        "🇵🇭",  # Philippines
+        "🇵🇰",  # Pakistan
+        "🇵🇱",  # Poland
+        "🇵🇲",  # St. Pierre & Miquelon; country code starts with P
+        "🇵🇳",  # Pitcairn Islands
+        "🇵🇷",  # Puerto Rico
+        "🇵🇸",  # Palestinian Territories
+        "🇵🇹",  # Portugal
+        "🇵🇼",  # Palau
+        "🇵🇾",  # Paraguay
     ]
     # if s contains valid flag
     if any(char in s for char in validFlags):
         return True
     else:
-        print("Rule 10: Password must have the `flag emoji` of a country whose name/country code starts with the letter `P`.")
+        print(
+            "Rule 10: Password must have the `flag emoji` of a country whose name/country code starts with the letter `P`."
+        )
         return False
 
 
@@ -183,36 +188,138 @@ def month_reqs(s):
 def food_reqs(s):
     # food item emoji list
     validFood = [
-        "🍇", "🍈", "🍉", "🍊", "🍋",
-        "🍌", "🍍", "🥭", "🍎", "🍏",
-        "🍐", "🍑", "🍒", "🍓", "🫐",
-        "🥝", "🍅", "🫒", "🥥", "🥑",
-        "🍆", "🥔", "🥕", "🌽", "🌶",
-        "🫑", "🥒", "🥬", "🥦", "🧄", 
-        "🧅", "🍄", "🥜", "🫑", "🌰",
-        "🍞", "🥐", "🥖", "🫓", "🥨",
-        "🥯", "🥞", "🧇", "🧀", "🍖",
-        "🍗", "🥩", "🥓", "🍔", "🍟",
-        "🍕", "🌭", "🥪", "🌮", "🌯",
-        "🫔", "🥙", "🧆", "🥚", "🍳",
-        "🥘", "🍲", "🫕", "🥣", "🥗",
-        "🍿", "🧈", "🧂", "🥫", "🍱",
-        "🍘", "🍙", "🍚", "🍛", "🍜",
-        "🍝", "🍠", "🍢", "🍣", "🍤",
-        "🍥", "🥮", "🍡", "🥟", "🥠",
-        "🥡", "🦀", "🦞", "🦐", "🦑",
-        "🦪", "🍨", "🍧", "🍦", "🍩",
-        "🍪", "🎂", "🍰", "🧁", "🥧",
-        "🍫", "🍬", "🍭", "🍮", "🍯",
-        "🍼", "🥛", "☕", "🫖", "🍵",
-        "🍶", "🍾", "🍷", "🍸", "🍹",
-        "🍺", "🍻", "🥂", "🥃", "🥤",
-        "🧋", "🧃", "🧉", "🧊", "🧋"
+        "🍇",
+        "🍈",
+        "🍉",
+        "🍊",
+        "🍋",
+        "🍌",
+        "🍍",
+        "🥭",
+        "🍎",
+        "🍏",
+        "🍐",
+        "🍑",
+        "🍒",
+        "🍓",
+        "🫐",
+        "🥝",
+        "🍅",
+        "🫒",
+        "🥥",
+        "🥑",
+        "🍆",
+        "🥔",
+        "🥕",
+        "🌽",
+        "🌶",
+        "🫑",
+        "🥒",
+        "🥬",
+        "🥦",
+        "🧄",
+        "🧅",
+        "🍄",
+        "🥜",
+        "🫑",
+        "🌰",
+        "🍞",
+        "🥐",
+        "🥖",
+        "🫓",
+        "🥨",
+        "🥯",
+        "🥞",
+        "🧇",
+        "🧀",
+        "🍖",
+        "🍗",
+        "🥩",
+        "🥓",
+        "🍔",
+        "🍟",
+        "🍕",
+        "🌭",
+        "🥪",
+        "🌮",
+        "🌯",
+        "🫔",
+        "🥙",
+        "🧆",
+        "🥚",
+        "🍳",
+        "🥘",
+        "🍲",
+        "🫕",
+        "🥣",
+        "🥗",
+        "🍿",
+        "🧈",
+        "🧂",
+        "🥫",
+        "🍱",
+        "🍘",
+        "🍙",
+        "🍚",
+        "🍛",
+        "🍜",
+        "🍝",
+        "🍠",
+        "🍢",
+        "🍣",
+        "🍤",
+        "🍥",
+        "🥮",
+        "🍡",
+        "🥟",
+        "🥠",
+        "🥡",
+        "🦀",
+        "🦞",
+        "🦐",
+        "🦑",
+        "🦪",
+        "🍨",
+        "🍧",
+        "🍦",
+        "🍩",
+        "🍪",
+        "🎂",
+        "🍰",
+        "🧁",
+        "🥧",
+        "🍫",
+        "🍬",
+        "🍭",
+        "🍮",
+        "🍯",
+        "🍼",
+        "🥛",
+        "☕",
+        "🫖",
+        "🍵",
+        "🍶",
+        "🍾",
+        "🍷",
+        "🍸",
+        "🍹",
+        "🍺",
+        "🍻",
+        "🥂",
+        "🥃",
+        "🥤",
+        "🧋",
+        "🧃",
+        "🧉",
+        "🧊",
+        "🧋",
     ]
     if any(char in s for char in validFood):
         return True
     else:
-        print("Rule 12: We've been here for so long… I'm hungry! Password must have a `food emoji`.")
+        print(
+            "Rule 12: We've been here for so long… I'm hungry! Password must have a `food emoji`."
+        )
         return False
 
 
@@ -223,7 +330,9 @@ def timeNow_reqs(s):
     if strTime.casefold() in s.casefold():
         return True
     else:
-        print("Rule 13: Your password must include the current time in `HH:MM` military time format.")
+        print(
+            "Rule 13: Your password must include the current time in `HH:MM` military time format."
+        )
         return False
 
 
