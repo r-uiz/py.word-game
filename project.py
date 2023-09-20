@@ -102,8 +102,17 @@ def hasUpper_reqs(s):
 
 
 def sixNine_reqs(s):
-    # get all digits sum, if 69 return True; for loop, isdigit
-    return True
+    sum = 0
+    for char in s:
+        # add to sum if digit
+        if char.isdigit() == True:
+            x = int(char)
+            sum += x
+    if sum == 69:
+        return True
+    else:
+        print("The digits in your password must add up to `69`.")
+        return False
 
 
 def dateToday_reqs(s):
