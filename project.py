@@ -2,8 +2,9 @@ import re
 import sys
 import string
 import random
+import readline
 import subprocess
-from datetime import date, datetime
+from datetime import datetime
 from captcha.image import ImageCaptcha
 
 
