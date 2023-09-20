@@ -26,14 +26,24 @@ def main():
     except KeyboardInterrupt:
         print("\nProgram quit. Try to create a password again later!")
 
-    # if finally valid, exit
-
 
 def validate(s):
-    # contains all reqs; para prettier main lang
-    # if invalid based on req, return False.
-    # if valid, return True
-    return False
+    if (
+        normal_reqs(s) == True
+        and sixnine_reqs(s) == True
+        and datetoday_reqs(s) == True
+        and pokemonmove_reqs(s) == True
+        and captcha_reqs(s) == True
+        and flag_reqs(s) == True
+        and month_reqs(s) == True
+        and food_reqs(s) == True
+        and timenow_reqs(s) == True
+    ):
+        # passes all requirements
+        return True
+    else:
+        # invalid password
+        return False
 
 
 def normal_reqs(s):
@@ -43,12 +53,12 @@ def normal_reqs(s):
     # include a number; any() str.isdigit()
     # has a special char and no whitespace; not isalnum, not " " in attempt
     # has an uppercase letter; any(), isupper for char in attempt
-    ...
+    return True
 
 
 def sixnine_reqs(s):
     # get all digits sum, if 69 return True; for loop, isdigit
-    ...
+    return True
 
 
 def datetoday_reqs(s):
@@ -56,28 +66,27 @@ def datetoday_reqs(s):
     # turn into string
     # put in variable
     # if today in str
-
-    ...
+    return True
 
 
 def pokemonmove_reqs(s):
     # api call
     # get list of moves
     # if in s, True
-    ...
+    return True
 
 
 def captcha_reqs(s):
     # attempt counter; if div by 5,
     # regenerate captcha with random
-    captcha = ImageCaptcha()
-    ...
+    # captcha = ImageCaptcha()
+    return True
 
 
 def flag_reqs(s):
     # valid flags list
     # if s contains valid flag
-    ...
+    return True
 
 
 def month_reqs(s):
@@ -85,13 +94,13 @@ def month_reqs(s):
     # turn into string
     # put in variable
     # if month in str
-    ...
+    return True
 
 
 def food_reqs(s):
     # food emoji list
     # if s contains food, True
-    ...
+    return True
 
 
 def timenow_reqs(s):
@@ -99,7 +108,7 @@ def timenow_reqs(s):
     # turn into string
     # put in variable
     # if time in str
-    ...
+    return True
 
 
 if __name__ == "__main__":
