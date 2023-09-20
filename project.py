@@ -15,7 +15,7 @@ def main():
     try:
         while True:
             attempt = input("Password: ")
-            if validate(attempt) == False:
+            if validate(attempt.strip()) == False:
                 print("Last attempt copied to clipboard. Ctrl+C to quit.")
                 pass
             else:
@@ -28,15 +28,19 @@ def main():
 
 def validate(s):
     if (
-        normal_reqs(s) == True
-        and sixnine_reqs(s) == True
-        and datetoday_reqs(s) == True
-        and pokemonmove_reqs(s) == True
+        minLength_reqs(s) == True
+        and maxLength_reqs(s) == True
+        and hasNumber_reqs(s) == True
+        and hasSpecial_reqs(s) == True
+        and hasUpper_reqs(s) == True
+        and sixNine_reqs(s) == True
+        and dateToday_reqs(s) == True
+        and pokemonMove_reqs(s) == True
         and captcha_reqs(s) == True
         and flag_reqs(s) == True
         and month_reqs(s) == True
         and food_reqs(s) == True
-        and timenow_reqs(s) == True
+        and timeNow_reqs(s) == True
     ):
         # passes all requirements
         return True
@@ -47,22 +51,62 @@ def validate(s):
         return False
 
 
-def normal_reqs(s):
-    # string of if statements; if all pass, return True.
-    # grouped together because quite normal requirements
-    # 5 - 50 char limit; len()
-    # include a number; any() str.isdigit()
-    # has a special char and no whitespace; not isalnum, not " " in attempt
-    # has an uppercase letter; any(), isupper for char in attempt
-    return True
+def minLength_reqs(s):
+    # min 5
+    if len(s) >= 5:
+        return True
+    else:
+        print("Rule 1: Password must be at least 5 characters long")
+        return False
 
 
-def sixnine_reqs(s):
+def maxLength_reqs(s):
+    # max 50
+    if len(s) <= 50:
+        return True
+    else:
+        print("Rule 2: Password has a 50 character limit")
+        return False
+
+
+def hasNumber_reqs(s):
+    # include a number
+    if any(char.isdigit() for char in s):
+        return True
+    else:
+        print("Rule 3: Password must include a number.")
+        return False
+
+
+def hasSpecial_reqs(s):
+    specialCharacters = set(string.punctuation)
+    if (
+        # has a special char
+        any(char in specialCharacters for char in s)
+        # does not have whitespace
+        and bool(re.findall(r"[ ]+", s)) == False
+    ):
+        return True
+    else:
+        print("Rule 4: Password must contain a special character and no whitespace.")
+        return False
+
+
+def hasUpper_reqs(s):
+    # has an uppercase letter
+    if any(char.isupper() for char in s):
+        return True
+    else:
+        print("Rule 5: Password must contain an uppercase letter.")
+        return False
+
+
+def sixNine_reqs(s):
     # get all digits sum, if 69 return True; for loop, isdigit
     return True
 
 
-def datetoday_reqs(s):
+def dateToday_reqs(s):
     # get date today with datetime
     # turn into string
     # put in variable
@@ -70,7 +114,7 @@ def datetoday_reqs(s):
     return True
 
 
-def pokemonmove_reqs(s):
+def pokemonMove_reqs(s):
     # api call
     # get list of moves
     # if in s, True
@@ -104,7 +148,7 @@ def food_reqs(s):
     return True
 
 
-def timenow_reqs(s):
+def timeNow_reqs(s):
     # get current time with datetime
     # turn into string
     # put in variable
