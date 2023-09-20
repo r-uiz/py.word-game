@@ -16,7 +16,7 @@ def main():
         while True:
             attempt = input("Password: ")
             if validate(attempt.strip()) == False:
-                print("Last attempt copied to clipboard. Ctrl+C to quit.")
+                print("Last attempt copied to clipboard. Attempt again or Ctrl+C to quit.")
                 pass
             else:
                 sys.exit(
