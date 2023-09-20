@@ -16,7 +16,6 @@ def main():
         while True:
             attempt = input("Password: ")
             if validate(attempt) == False:
-                subprocess.run("pbcopy", text=True, input=attempt)
                 print("Last attempt copied to clipboard. Ctrl+C to quit.")
                 pass
             else:
@@ -43,6 +42,8 @@ def validate(s):
         return True
     else:
         # invalid password
+        # copies last attempt to your clipboard
+        subprocess.run("pbcopy", text=True, input=s)
         return False
 
 
