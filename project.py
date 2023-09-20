@@ -217,7 +217,7 @@ def food_reqs(s):
 
 def timeNow_reqs(s):
     now = datetime.now()
-    # turn datetime obj's month into full string
+    # turn datetime obj's HH:MM into string
     strTime = now.strftime("%H:%M")
     if strTime.casefold() in s.casefold():
         return True
