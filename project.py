@@ -216,11 +216,14 @@ def food_reqs(s):
 
 
 def timeNow_reqs(s):
-    # get current time with datetime
-    # turn into string
-    # put in variable
-    # if time in str
-    return True
+    now = datetime.now()
+    # turn datetime obj's month into full string
+    strTime = now.strftime("%H:%M")
+    if strTime.casefold() in s.casefold():
+        return True
+    else:
+        print("Rule 13: Your password must include the current time in `HH:MM` military time format.")
+        return False
 
 
 if __name__ == "__main__":
