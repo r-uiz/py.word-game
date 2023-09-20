@@ -128,7 +128,6 @@ def dateToday_reqs(s):
         return False
 
 
-
 def pokemonMove_reqs(s):
     # api call
     # get list of moves
@@ -144,9 +143,29 @@ def captcha_reqs(s):
 
 
 def flag_reqs(s):
-    # valid flags list
+    validFlags = [
+        "🏴‍☠️", # Pirate flag; easter egg
+        "🇵🇦", # Panama
+        "🇵🇪", # Peru
+        "🇵🇫", # French Polynesia; country code starts with P
+        "🇵🇬", # Papua New Guinea
+        "🇵🇭", # Philippines
+        "🇵🇰", # Pakistan
+        "🇵🇱", # Poland
+        "🇵🇲", # St. Pierre & Miquelon; country code starts with P
+        "🇵🇳", # Pitcairn Islands
+        "🇵🇷", # Puerto Rico
+        "🇵🇸", # Palestinian Territories
+        "🇵🇹", # Portugal
+        "🇵🇼", # Palau
+        "🇵🇾", # Paraguay
+    ]
     # if s contains valid flag
-    return True
+    if any(char in s for char in validFlags):
+        return True
+    else:
+        print("Rule 10: Password must have the `flag emoji` of a country whose name/country code starts with the letter `P`.")
+        return False
 
 
 def month_reqs(s):
