@@ -118,9 +118,8 @@ def sixNine_reqs(s):
 
 
 def dateToday_reqs(s):
-    # get date today with datetime
     today = date.today()
-    # turn into string
+    # turn datetime obj into string
     strToday = today.strftime("%Y-%m-%d")
     if strToday in s:
         return True
