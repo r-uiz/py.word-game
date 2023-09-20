@@ -118,9 +118,9 @@ def sixNine_reqs(s):
 
 
 def dateToday_reqs(s):
-    today = date.today()
+    now = datetime.now()
     # turn datetime obj into string
-    strToday = today.strftime("%Y-%m-%d")
+    strToday = now.strftime("%Y-%m-%d")
     if strToday in s:
         return True
     else:
@@ -169,11 +169,14 @@ def flag_reqs(s):
 
 
 def month_reqs(s):
-    # get current month with datetime
-    # turn into string
-    # put in variable
-    # if month in str
-    return True
+    now = datetime.now()
+    # turn datetime obj's month into full string
+    strMonth = now.strftime("%B")
+    if strMonth.casefold() in s.casefold():
+        return True
+    else:
+        print("Rule 11: Password must include the `month` we're currently in.")
+        return False
 
 
 def food_reqs(s):
