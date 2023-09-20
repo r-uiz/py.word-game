@@ -3,7 +3,7 @@ import sys
 import string
 import random
 import subprocess
-from datetime import datetime
+from datetime import date, datetime
 from captcha.image import ImageCaptcha
 
 
@@ -16,7 +16,9 @@ def main():
         while True:
             attempt = input("Password: ")
             if validate(attempt.strip()) == False:
-                print("Last attempt copied to clipboard. Attempt again or Ctrl+C to quit.")
+                print(
+                    "Last attempt copied to clipboard. Attempt again or Ctrl+C to quit."
+                )
                 pass
             else:
                 sys.exit(
@@ -111,16 +113,21 @@ def sixNine_reqs(s):
     if sum == 69:
         return True
     else:
-        print("The digits in your password must add up to `69`.")
+        print("Rule 6: The digits in your password must add up to `69`.")
         return False
 
 
 def dateToday_reqs(s):
     # get date today with datetime
+    today = date.today()
     # turn into string
-    # put in variable
-    # if today in str
-    return True
+    strToday = today.strftime("%Y-%m-%d")
+    if strToday in s:
+        return True
+    else:
+        print("Rule 7: Password must have the date today in `YYYY-MM-DD` format.")
+        return False
+
 
 
 def pokemonMove_reqs(s):
