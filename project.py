@@ -108,7 +108,6 @@ def sixNine_reqs(s):
 
 
 def dateToday_reqs(s):
-    # turn datetime obj into string
     strToday = datetime.now().strftime("%Y-%m-%d")
     if strToday in s:
         return True
@@ -161,7 +160,7 @@ def wildPokemon_reqs(s):
             pokeCounter += 1
             pokeCountdown = 3 - pokeCounter
             print(
-                f"Rule 8: A wild {pokemonName} appeared! Your password must include at least one of this Pokémon's type.(Regenerates in {pokeCountdown} attempts)"
+                f"Rule 8: A wild {pokemonName} appeared! Your password must include at least one of this Pokémon's type.(Regenerates in {pokeCountdown} wrong type attempts)"
             )
             print(pokemonTypes)
             if pokeCounter == 3:
@@ -197,7 +196,7 @@ def captcha_reqs(s):
         captchaCounter += 1
         captchaCountdown = 5 - captchaCounter
         print(
-            f"Rule 9: Password must include the captcha in the `captcha.png`/`captcha.wav` in the same directory as this program. Regenerates in {captchaCountdown} attempts."
+            f"Rule 9: Password must include the captcha in the `captcha.png`/`captcha.wav` in the same directory as this program. Regenerates in {captchaCountdown} wrong captcha attempts."
         )
         if captchaCounter == 5:
             print("Captcha reset!")
