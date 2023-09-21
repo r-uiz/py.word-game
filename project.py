@@ -162,7 +162,6 @@ def wildPokemon_reqs(s):
             print(
                 f"Rule 8: A wild {pokemonName} appeared! Your password must include at least one of this Pokémon's type.(Regenerates in {pokeCountdown} wrong type attempts)"
             )
-            print(pokemonTypes)
             if pokeCounter == 3:
                 reset_pokemon()
                 print("New Pokémon!")
