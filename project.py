@@ -3,12 +3,15 @@ import sys
 import string
 import random
 import readline
-import subprocess
+import pyperclip
 from datetime import datetime
 from io import BytesIO
 from pathlib import Path, PurePath
 from captcha.audio import AudioCaptcha
 from captcha.image import ImageCaptcha
+
+voice_dir = Path.cwd() / "en"
+captcha = "".join(random.choice(string.ascii_lowercase) for _ in range(5))
 
 
 def main():
@@ -18,8 +21,9 @@ def main():
     # ask for attempt
     try:
         while True:
-            attempt = input("Password: ")
-            if validate(attempt.strip()) == False:
+            attempt = input("Password: ").strip()
+            if not validate(attempt):
+                pyperclip.copy(attempt)
                 print(
                     "Last attempt copied to clipboard. Attempt again or Ctrl+C to quit."
                 )
@@ -34,26 +38,23 @@ def main():
 
 def validate(s):
     if (
-        minLength_reqs(s) == True
-        and maxLength_reqs(s) == True
-        and hasNumber_reqs(s) == True
-        and hasSpecial_reqs(s) == True
-        and hasUpper_reqs(s) == True
-        and sixNine_reqs(s) == True
-        and dateToday_reqs(s) == True
-        and pokemonMove_reqs(s) == True
-        and captcha_reqs(s) == True
-        and flag_reqs(s) == True
-        and month_reqs(s) == True
-        and food_reqs(s) == True
-        and timeNow_reqs(s) == True
+        minLength_reqs(s)
+        and maxLength_reqs(s)
+        and hasNumber_reqs(s)
+        and hasSpecial_reqs(s)
+        and hasUpper_reqs(s)
+        and sixNine_reqs(s)
+        and dateToday_reqs(s)
+        and pokemonMove_reqs(s)
+        and captcha_reqs(s)
+        and flag_reqs(s)
+        and month_reqs(s)
+        and food_reqs(s)
+        and timeNow_reqs(s)
     ):
         # passes all requirements
         return True
     else:
-        # invalid password
-        # copies last attempt to your clipboard
-        subprocess.run("pbcopy", text=True, input=s)
         return False
 
 
@@ -135,13 +136,45 @@ def dateToday_reqs(s):
 def pokemonMove_reqs(s):
     # api call
     # get list of moves
-    # if in s, True
+    # if any in s, True
     return True
+
+
+def generate_audio_captcha():
+    audio = AudioCaptcha(str(voice_dir))
+    data = audio.generate(captcha)
+    audio.write(captcha, "captcha.wav")
+
+
+def generate_image_captcha():
+    image = ImageCaptcha()
+    data = image.generate(captcha)
+    image.write(captcha, "captcha.png")
+
+
+def reset_captcha():
+    global captcha
+    global counter
+    counter = 0
+    captcha = "".join(random.choice(string.ascii_lowercase) for _ in range(5))
+    generate_audio_captcha()
+    generate_image_captcha()
 
 
 def captcha_reqs(s):
-    ...
-    return True
+    global captcha
+    global counter
+    if captcha not in s:
+        counter += 1
+        print(
+            "Rule 9: Password must include the captcha in the `captcha.png`/`captcha.wav` in the same directory as this program. (Regenerates every 5 wrong attempts)"
+        )
+        if counter == 5:
+            print("Captcha reset!")
+            reset_captcha()
+        return False
+    else:
+        return True
 
 
 def flag_reqs(s):
@@ -152,7 +185,9 @@ def flag_reqs(s):
     if any(char in s for char in list_validFlag):
         return True
     else:
-        print("Rule 10: Password must have the `flag emoji` of a country whose name/country code starts with the letter `P`.")
+        print(
+            "Rule 10: Password must have the `flag emoji` of a country whose name/country code starts with the letter `P`."
+        )
         return False
 
 
@@ -175,7 +210,9 @@ def food_reqs(s):
     if any(char in s for char in list_validFood):
         return True
     else:
-        print("Rule 12: We've been here for so long… I'm hungry! Password must have a `food emoji`.")
+        print(
+            "Rule 12: We've been here for so long… I'm hungry! Password must have a `food emoji`."
+        )
         return False
 
 
@@ -186,9 +223,14 @@ def timeNow_reqs(s):
     if strTime.casefold() in s.casefold():
         return True
     else:
-        print("Rule 13: Your password must include the current time in `HH:MM` military time format.")
+        print(
+            "Rule 13: Your password must include the current time in `HH:MM` military time format."
+        )
         return False
 
 
 if __name__ == "__main__":
+    counter = 0
+    generate_audio_captcha()
+    generate_image_captcha()
     main()
