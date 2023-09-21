@@ -4,14 +4,17 @@
     },
     "python.formatting.provider": "none",
     "cSpell.words": [
+        "Addtl",
         "Bulbasaur",
         "datetoday",
+        "docstrings",
         "pbcopy",
         "pokemonmove",
         "pyperclip",
         "reqs",
         "sixnine",
         "startcaptcha",
-        "timenow"
+        "timenow",
+        "tkinter"
     ]
 }
