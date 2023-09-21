@@ -1,17 +1,15 @@
-import re
 import sys
 import string
 import random
 import readline
+import requests
 import pyperclip
-from datetime import datetime
 from io import BytesIO
-from pathlib import Path, PurePath
+from pathlib import Path
+from datetime import datetime
 from captcha.audio import AudioCaptcha
 from captcha.image import ImageCaptcha
-
-voice_dir = Path.cwd() / "en"
-captcha = "".join(random.choice(string.ascii_lowercase) for _ in range(5))
+from PIL import Image
 
 
 def main():
@@ -23,21 +21,20 @@ def main():
         while True:
             attempt = input("Password: ").strip()
             pyperclip.copy(attempt)
-            if not validate(attempt):
-                print(
-                    "Last attempt copied to clipboard. Attempt again or Ctrl+C to quit."
-                )
-                pass
-            else:
+            if validate(attempt):
                 sys.exit(
                     f'Congrats! Password "{attempt}" is valid. Wait... did we say that out loud?'
+                )
+            else:
+                print(
+                    "Last attempt copied to clipboard. Attempt again or Ctrl+C to quit."
                 )
     except KeyboardInterrupt:
         print("\nProgram quit. Try to create a password again later!")
 
 
 def validate(s):
-    if (
+    return (
         minLength_reqs(s)
         and maxLength_reqs(s)
         and hasNumber_reqs(s)
@@ -45,17 +42,13 @@ def validate(s):
         and hasUpper_reqs(s)
         and sixNine_reqs(s)
         and dateToday_reqs(s)
-        and pokemonMove_reqs(s)
+        and wildPokemon_reqs(s)
         and captcha_reqs(s)
         and flag_reqs(s)
         and month_reqs(s)
         and food_reqs(s)
         and timeNow_reqs(s)
-    ):
-        # passes all requirements
-        return True
-    else:
-        return False
+    )
 
 
 def minLength_reqs(s):
@@ -87,11 +80,8 @@ def hasNumber_reqs(s):
 
 def hasSpecial_reqs(s):
     specialCharacters = set(string.punctuation)
-    if (
-        # has a special char
-        any(char in specialCharacters for char in s)
-        # does not have whitespace
-        and bool(re.findall(r"[ ]+", s)) == False
+    if any(char in specialCharacters for char in s) and not any(
+        char.isspace() for char in s
     ):
         return True
     else:
@@ -109,13 +99,8 @@ def hasUpper_reqs(s):
 
 
 def sixNine_reqs(s):
-    sum = 0
-    for char in s:
-        # add to sum if digit
-        if char.isdigit() == True:
-            x = int(char)
-            sum += x
-    if sum == 69:
+    digit_sum = sum(int(char) for char in s if char.isdigit())
+    if digit_sum == 69:
         return True
     else:
         print("Rule 6: The digits in your password must add up to `69`.")
@@ -123,9 +108,8 @@ def sixNine_reqs(s):
 
 
 def dateToday_reqs(s):
-    now = datetime.now()
     # turn datetime obj into string
-    strToday = now.strftime("%Y-%m-%d")
+    strToday = datetime.now().strftime("%Y-%m-%d")
     if strToday in s:
         return True
     else:
@@ -133,11 +117,58 @@ def dateToday_reqs(s):
         return False
 
 
-def pokemonMove_reqs(s):
-    # api call
-    # get list of moves
-    # if any in s, True
-    return True
+def fetch_random_pokemon():
+    global pokemonTypes, pokemonName
+    pokeIndex = random.randrange(1, 1021)
+    response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokeIndex}")
+
+    if response.status_code == 200:
+        pokemonData = response.json()
+        pokemonName = pokemonData["name"].title()
+        pokemonTypes = [type_data["type"]["name"] for type_data in pokemonData["types"]]
+        pokemon_sprite_url = pokemonData["sprites"]["other"]["official-artwork"][
+            "front_default"
+        ]
+
+        img = Image.open(requests.get(pokemon_sprite_url, stream=True).raw)
+        img.show(title=pokemonName)
+        print(
+            f"Rule 8: A wild {pokemonName} appeared! Your password must include at least one of this Pokémon's type."
+        )
+        return pokemonTypes
+
+    else:
+        print(
+            f"\nError: PokeAPI call failed. Error Code {response.status_code}. By default, get the type/s of Bulbasaur instead."
+        )
+        return ["grass", "poison"]
+
+
+def reset_pokemon():
+    global pokeCounter, pokemonTypes, pokemonName
+    pokeCounter = 0
+    pokemonTypes = fetch_random_pokemon()
+    pokemonName = pokemonTypes[0]
+
+
+def wildPokemon_reqs(s):
+    global pokeCounter, pokemonTypes, pokemonName
+    if pokemonTypes is None:
+        fetch_random_pokemon()
+        return False
+    for type in pokemonTypes:
+        if type not in s:
+            pokeCounter += 1
+            pokeCountdown = 5 - pokeCounter
+            print(
+                f"Rule 8: A wild {pokemonName} appeared! Your password must include at least one of this Pokémon's type.(Regenerates in {pokeCountdown} attempts)"
+            )
+            print(pokemonTypes)
+            if pokeCounter == 5:
+                reset_pokemon()
+                print("New Pokémon!")
+            return False
+        return True
 
 
 def generate_audio_captcha():
@@ -153,28 +184,26 @@ def generate_image_captcha():
 
 
 def reset_captcha():
-    global captcha
-    global counter
-    counter = 0
+    global captcha, captchaCounter
+    captchaCounter = 0
     captcha = "".join(random.choice(string.ascii_lowercase) for _ in range(5))
     generate_audio_captcha()
     generate_image_captcha()
 
 
 def captcha_reqs(s):
-    global captcha
-    global counter
+    global captcha, captchaCounter
     if captcha not in s:
-        counter += 1
+        captchaCounter += 1
+        captchaCountdown = 5 - captchaCounter
         print(
-            "Rule 9: Password must include the captcha in the `captcha.png`/`captcha.wav` in the same directory as this program. (Regenerates every 5 wrong attempts)"
+            f"Rule 9: Password must include the captcha in the `captcha.png`/`captcha.wav` in the same directory as this program. Regenerates in {captchaCountdown} attempts."
         )
-        if counter == 5:
+        if captchaCounter == 5:
             print("Captcha reset!")
             reset_captcha()
         return False
-    else:
-        return True
+    return True
 
 
 def flag_reqs(s):
@@ -192,9 +221,7 @@ def flag_reqs(s):
 
 
 def month_reqs(s):
-    now = datetime.now()
-    # turn datetime obj's month into full string
-    strMonth = now.strftime("%B")
+    strMonth = datetime.now().strftime("%B")
     if strMonth.casefold() in s.casefold():
         return True
     else:
@@ -217,9 +244,7 @@ def food_reqs(s):
 
 
 def timeNow_reqs(s):
-    now = datetime.now()
-    # turn datetime obj's HH:MM into string
-    strTime = now.strftime("%H:%M")
+    strTime = datetime.now().strftime("%H:%M")
     if strTime.casefold() in s.casefold():
         return True
     else:
@@ -230,7 +255,12 @@ def timeNow_reqs(s):
 
 
 if __name__ == "__main__":
-    counter = 0
+    captchaCounter = 0
+    voice_dir = Path.cwd() / "en"
+    captcha = "".join(random.choice(string.ascii_lowercase) for _ in range(5))
+    pokeCounter = 0
+    pokemonTypes = None
+    pokemonName = None
     generate_audio_captcha()
     generate_image_captcha()
     main()
