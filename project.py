@@ -140,36 +140,8 @@ def pokemonMove_reqs(s):
 
 
 def captcha_reqs(s):
-    image = ImageCaptcha()
-    data: BytesIO = image.generate(randomcaptcha)
-    image.write(randomcaptcha, "captcha.png")
-
-
-    counter = 0
-
-
-    while True:
-        attempt = input("Attempt: ")
-        if randomcaptcha not in attempt:
-            counter += 1
-            if counter == 5:
-                counter = 0
-                print("Captcha reset!")
-                randomcaptcha = "".join((random.choice(source) for i in range(5)))
-
-                audio = AudioCaptcha(voice_dir)
-                data: bytearray = audio.generate(randomcaptcha)
-                audio.write(randomcaptcha, "captcha.wav")
-
-                image = ImageCaptcha()
-                data: BytesIO = image.generate(randomcaptcha)
-                image.write(randomcaptcha, "captcha.png")
-
-            else:
-                pass
-        else:
-            print("Captcha correct!")
-            exit()
+    ...
+    return True
 
 
 def flag_reqs(s):
