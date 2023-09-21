@@ -2,7 +2,7 @@
 My final project for Harvard's CS50 Python, heavily inspired by https://neal.fun/password-game/.
 
 ## todo:
-- [ ] captcha code cleanup
+- [x] captcha code cleanup
 - [ ] make prettier
 - [ ] finalize readme
     - [ ] explain program
@@ -12,6 +12,9 @@ My final project for Harvard's CS50 Python, heavily inspired by https://neal.fun
     - [ ] what could be done better (input, mainly; clunky clipboard)
     - [ ] add logs
 - [ ] submit!
+
+## someday:
+- [ ] add a GUI for easier input and prettier overall [tkinter](https://docs.python.org/3/library/tkinter.html) or [PyQt](https://riverbankcomputing.com/software/pyqt/intro)
 
 
 ## notes:

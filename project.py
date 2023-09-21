@@ -22,8 +22,8 @@ def main():
     try:
         while True:
             attempt = input("Password: ").strip()
+            pyperclip.copy(attempt)
             if not validate(attempt):
-                pyperclip.copy(attempt)
                 print(
                     "Last attempt copied to clipboard. Attempt again or Ctrl+C to quit."
                 )
