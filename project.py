@@ -11,6 +11,15 @@ from captcha.audio import AudioCaptcha
 from captcha.image import ImageCaptcha
 from PIL import Image
 
+captcha_options = string.ascii_lowercase + string.digits
+captcha = "".join(random.choice(captcha_options) for _ in range(5))
+voice_dir = Path.cwd() / "en"
+captcha_counter = 0
+poke_counter = 0
+pokemon_types = None
+pokemon_name = None
+min_length = 5
+max_length = 50
 
 def main():
     # explanation
@@ -255,15 +264,6 @@ def time_now_reqs(s):
 
 
 if __name__ == "__main__":
-    captcha_options = string.ascii_lowercase + string.digits
-    captcha = "".join(random.choice(captcha_options) for _ in range(5))
-    voice_dir = Path.cwd() / "en"
-    captcha_counter = 0
-    poke_counter = 0
-    pokemon_types = None
-    pokemon_name = None
-    min_length = 5
-    max_length = 50
     generate_audio_captcha()
     generate_image_captcha()
     main()
