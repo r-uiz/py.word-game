@@ -37,7 +37,8 @@ My final project for Harvard's CS50 Python, heavily inspired by https://neal.fun
 - add numbers to captcha (fun lil challenge, bit of an annoyance but its a game, no?)
 - lower max limit (might be too limiting)
 - include total length of password (will mess with current answers in int-based reqs)
-- must include a palindrome that has a minimum of 5 characters.
+- must include a palindrome that has a minimum of 5 characters and is not a number.
+- With the given set of ten letters, must include a valid word that uses some of the letters given. Regenerates new set every time you get it wrong.(easier reset if impossible to make word)
 
 
 ## Things to improve as per ChatGPT:

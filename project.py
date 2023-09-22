@@ -52,20 +52,20 @@ def validate(s):
 
 
 def min_length_reqs(s):
-    # min 5
-    if len(s) >= 5:
+    global min_length
+    if len(s) >= min_length:
         return True
     else:
-        print("Rule 1: Password must be at least 5 characters long")
+        print(f"Rule 1: Password must be at least {min_length} characters long")
         return False
 
 
 def max_length_reqs(s):
-    # max 50
-    if len(s) <= 50:
+    global max_length
+    if len(s) <= max_length:
         return True
     else:
-        print("Rule 2: Password has a 50 character limit")
+        print(f"Rule 2: Password has a {max_length} character limit")
         return False
 
 
@@ -257,11 +257,13 @@ def time_now_reqs(s):
 if __name__ == "__main__":
     captcha_options = string.ascii_lowercase + string.digits
     captcha = "".join(random.choice(captcha_options) for _ in range(5))
-    captcha_counter = 0
     voice_dir = Path.cwd() / "en"
+    captcha_counter = 0
     poke_counter = 0
     pokemon_types = None
     pokemon_name = None
+    min_length = 5
+    max_length = 50
     generate_audio_captcha()
     generate_image_captcha()
     main()
