@@ -1,6 +1,7 @@
 # py.word-game
 My final project for Harvard's CS50 Python, heavily inspired by https://neal.fun/password-game/.
-
+[[logs.md|See logs here]]
+[[requirements.txt|See requirements here]]
 ## todo:
 - [x] captcha code cleanup
 - [ ] make prettier
@@ -31,11 +32,12 @@ My final project for Harvard's CS50 Python, heavily inspired by https://neal.fun
 
 ### Addtl rule ideas:
 - Retype the valid password to confirm
-- Retype the valid password backwards to confirm
+- Retype the valid password backwards to confirm (will be hard with emojis)
     - not running time func
-- add numbers to captcha
-- lower max limit
-- include total length of password
+- add numbers to captcha (fun lil challenge, bit of an annoyance but its a game, no?)
+- lower max limit (might be too limiting)
+- include total length of password (will mess with current answers in int-based reqs)
+- must include a palindrome that has a minimum of 5 characters.
 
 
 ## Things to improve as per ChatGPT:
