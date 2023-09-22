@@ -1,3 +1,4 @@
+import os
 import sys
 import time
 import string
@@ -7,7 +8,7 @@ import requests
 import pyperclip
 from io import BytesIO
 from pathlib import Path
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
 from captcha.audio import AudioCaptcha
 from captcha.image import ImageCaptcha
 from PIL import Image
@@ -25,7 +26,7 @@ class PasswordGame:
         self.pokemon_name = None
         self.min_length = 5
         self.max_length = 50
-        self.confirm_time_limit = 30 # in seconds
+        self.confirm_time_limit = 30  # in seconds
 
     def main(self):
         print("Welcome to Py.word Game! Choose a password.")
@@ -42,12 +43,17 @@ class PasswordGame:
                         "Last attempt copied to clipboard. Attempt again or Ctrl+C to quit."
                     )
         except KeyboardInterrupt:
+            self.clear_terminal()
             print("\nProgram quit. Try to create a password again later!")
         program_elapsed_time = time.time() - program_start_time
         formatted_time = self.format_elapsed_time(program_elapsed_time)
+        self.clear_terminal()
         sys.exit(
-            f'Congrats! Successfully created a password in {formatted_time}. \nPassword "{attempt}" is valid. Wait... did we say that out loud?'
+            f'Congrats! Successfully created a password in {formatted_time}!\nPassword "{attempt}" is valid.\nWait... did we say that out loud?'
         )
+
+    def clear_terminal(self):
+        os.system("cls" if os.name == "nt" else "clear")
 
     def confirm(self, valid):
         start_confirm_time = time.time()
@@ -62,9 +68,11 @@ class PasswordGame:
         if confirm == valid and confirm_elapsed_time <= self.confirm_time_limit:
             return True
         else:
-            print("Doesn't seem to be a match or time limit exceeded... Try again. Completely.")
+            print(
+                "Doesn't seem to be a match or time limit exceeded... Try again. Completely."
+            )
             return False
-    
+
     def format_elapsed_time(self, elapsed_time):
         elapsed_time = int(elapsed_time)
         td = timedelta(seconds=elapsed_time)
@@ -105,6 +113,7 @@ class PasswordGame:
         if len(s) >= self.min_length:
             return True
         else:
+            self.clear_terminal()
             print(
                 f"Rule 1: Password must be at least {self.min_length} characters long"
             )
@@ -114,6 +123,7 @@ class PasswordGame:
         if len(s) <= self.max_length:
             return True
         else:
+            self.clear_terminal()
             print(f"Rule 2: Password has a {self.max_length} character limit")
             return False
 
@@ -122,6 +132,7 @@ class PasswordGame:
         if any(char.isdigit() for char in s):
             return True
         else:
+            self.clear_terminal()
             print("Rule 3: Password must include a number.")
             return False
 
@@ -132,6 +143,7 @@ class PasswordGame:
         ):
             return True
         else:
+            self.clear_terminal()
             print(
                 "Rule 4: Password must contain a special character and no whitespace."
             )
@@ -142,6 +154,7 @@ class PasswordGame:
         if any(char.isupper() for char in s):
             return True
         else:
+            self.clear_terminal()
             print("Rule 5: Password must contain an uppercase letter.")
             return False
 
@@ -150,6 +163,7 @@ class PasswordGame:
         if digit_sum == 69:
             return True
         else:
+            self.clear_terminal()
             print("Rule 6: The digits in your password must add up to `69`.")
             return False
 
@@ -158,6 +172,7 @@ class PasswordGame:
         if str_today in s:
             return True
         else:
+            self.clear_terminal()
             print("Rule 7: Password must have the date today in `YYYY-MM-DD` format.")
             return False
 
@@ -177,12 +192,14 @@ class PasswordGame:
 
             img = Image.open(requests.get(pokemon_sprite_url, stream=True).raw)
             img.show(title=self.pokemon_name)
+            self.clear_terminal()
             print(
-                f"Rule 8: A wild {self.pokemon_name} appeared! Your password must include at least one of this Pokémon's type."
+                f"Rule 8: A wild {self.pokemon_name} appeared!\nYour password must include at least one of this Pokémon's type."
             )
             return self.pokemon_types, self.pokemon_name
 
         else:
+            self.clear_terminal()
             print(
                 f"\nError: PokeAPI call failed. Error Code {response.status_code}. By default, include the type/s of Bulbasaur instead."
             )
@@ -200,8 +217,9 @@ class PasswordGame:
             if type not in s:
                 self.poke_counter += 1
                 poke_countdown = 3 - self.poke_counter
+                self.clear_terminal()
                 print(
-                    f"Rule 8: A wild {self.pokemon_name} appeared! Your password must include at least one of this Pokémon's type.(Regenerates in {poke_countdown} wrong type attempts)"
+                    f"Rule 8: A wild {self.pokemon_name} appeared!\nYour password must include at least one of this Pokémon's type.(Regenerates in {poke_countdown} wrong type attempts)"
                 )
                 if self.poke_counter == 3:
                     self.reset_pokemon()
@@ -234,6 +252,7 @@ class PasswordGame:
         if self.captcha not in s:
             self.captcha_counter += 1
             captcha_countdown = 5 - self.captcha_counter
+            self.clear_terminal()
             print(
                 f"Rule 9: Password must include the captcha in the `captcha.png`/`captcha.wav` in the same directory as this program. Regenerates in {captcha_countdown} wrong captcha attempts."
             )
@@ -251,6 +270,7 @@ class PasswordGame:
         if any(char in s for char in list_valid_flag):
             return True
         else:
+            self.clear_terminal()
             print(
                 "Rule 10: Password must have the `flag emoji` of a country whose name/country code starts with the letter `P`."
             )
@@ -261,6 +281,7 @@ class PasswordGame:
         if str_month.casefold() in s.casefold():
             return True
         else:
+            self.clear_terminal()
             print("Rule 11: Password must include the `month` we're currently in.")
             return False
 
@@ -272,6 +293,7 @@ class PasswordGame:
         if any(char in s for char in list_valid_food):
             return True
         else:
+            self.clear_terminal()
             print(
                 "Rule 12: We've been here for so long… I'm hungry! Password must have a `food emoji`."
             )
@@ -282,6 +304,7 @@ class PasswordGame:
         if str_time.casefold() in s.casefold():
             return True
         else:
+            self.clear_terminal()
             print(
                 "Rule 13: Your password must include the current time in `HH:MM` military time format."
             )
