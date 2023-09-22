@@ -21,6 +21,7 @@ pokemon_name = None
 min_length = 5
 max_length = 50
 
+
 def main():
     # explanation
     print("Welcome to Py.word Game! Choose a password.")
@@ -29,17 +30,19 @@ def main():
     try:
         while True:
             attempt = input("Password: ").strip()
-            pyperclip.copy(attempt)
             if validate(attempt):
-                sys.exit(
-                    f'Congrats! Password "{attempt}" is valid. Wait... did we say that out loud?'
-                )
+                if confirm(attempt):
+                    break
             else:
+                pyperclip.copy(attempt)
                 print(
                     "Last attempt copied to clipboard. Attempt again or Ctrl+C to quit."
                 )
     except KeyboardInterrupt:
         print("\nProgram quit. Try to create a password again later!")
+    sys.exit(
+        f'Congrats! Password "{attempt}" is valid. Wait... did we say that out loud?'
+    )
 
 
 def validate(s):
@@ -149,7 +152,7 @@ def fetch_random_pokemon():
 
     else:
         print(
-            f"\nError: PokeAPI call failed. Error Code {response.status_code}. By default, get the type/s of Bulbasaur instead."
+            f"\nError: PokeAPI call failed. Error Code {response.status_code}. By default, include the type/s of Bulbasaur instead."
         )
         return ["grass", "poison"]
 
@@ -260,6 +263,16 @@ def time_now_reqs(s):
         print(
             "Rule 13: Your password must include the current time in `HH:MM` military time format."
         )
+        return False
+
+
+def confirm(attempt):
+    pyperclip.copy("")
+    confirm = input("Reenter password: ")
+    if confirm == attempt:
+        return True
+    else:
+        print("Doesn't seem to be a match... Try again.")
         return False
 
 
