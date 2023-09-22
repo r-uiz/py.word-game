@@ -124,7 +124,9 @@ def fetch_random_pokemon():
     if response.status_code == 200:
         pokemon_data = response.json()
         pokemon_name = pokemon_data["name"].title()
-        pokemon_types = [type_data["type"]["name"] for type_data in pokemon_data["types"]]
+        pokemon_types = [
+            type_data["type"]["name"] for type_data in pokemon_data["types"]
+        ]
         pokemon_sprite_url = pokemon_data["sprites"]["other"]["official-artwork"][
             "front_default"
         ]
@@ -184,7 +186,7 @@ def generate_image_captcha():
 def reset_captcha():
     global captcha, captcha_counter
     captcha_counter = 0
-    captcha = "".join(random.choice(string.ascii_lowercase) for _ in range(5))
+    captcha = "".join(random.choice(captcha_options) for _ in range(5))
     generate_audio_captcha()
     generate_image_captcha()
 
@@ -253,9 +255,10 @@ def time_now_reqs(s):
 
 
 if __name__ == "__main__":
+    captcha_options = string.ascii_lowercase + string.digits
+    captcha = "".join(random.choice(captcha_options) for _ in range(5))
     captcha_counter = 0
     voice_dir = Path.cwd() / "en"
-    captcha = "".join(random.choice(string.ascii_lowercase) for _ in range(5))
     poke_counter = 0
     pokemon_types = None
     pokemon_name = None
