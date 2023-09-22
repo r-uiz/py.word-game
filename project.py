@@ -1,4 +1,5 @@
 import sys
+import time
 import string
 import random
 import readline
@@ -6,7 +7,7 @@ import requests
 import pyperclip
 from io import BytesIO
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime,timedelta
 from captcha.audio import AudioCaptcha
 from captcha.image import ImageCaptcha
 from PIL import Image
@@ -24,10 +25,11 @@ class PasswordGame:
         self.pokemon_name = None
         self.min_length = 5
         self.max_length = 50
+        self.confirm_time_limit = 30 # in seconds
 
     def main(self):
         print("Welcome to Py.word Game! Choose a password.")
-        print("Ctrl+C to quit the program")
+        program_start_time = time.time()
         try:
             while True:
                 attempt = input("Password: ").strip()
@@ -41,9 +43,46 @@ class PasswordGame:
                     )
         except KeyboardInterrupt:
             print("\nProgram quit. Try to create a password again later!")
+        program_elapsed_time = time.time() - program_start_time
+        formatted_time = self.format_elapsed_time(program_elapsed_time)
         sys.exit(
-            f'Congrats! Password "{attempt}" is valid. Wait... did we say that out loud?'
+            f'Congrats! Successfully created a password in {formatted_time}. \nPassword "{attempt}" is valid. Wait... did we say that out loud?'
         )
+
+    def confirm(self, valid):
+        start_confirm_time = time.time()
+        pyperclip.copy("")
+        print(
+            f"You have {self.confirm_time_limit} seconds to manually reenter your password."
+        )
+        confirm = input("Reenter password: ")
+
+        confirm_elapsed_time = time.time() - start_confirm_time
+
+        if confirm == valid and confirm_elapsed_time <= self.confirm_time_limit:
+            return True
+        else:
+            print("Doesn't seem to be a match or time limit exceeded... Try again. Completely.")
+            return False
+    
+    def format_elapsed_time(self, elapsed_time):
+        elapsed_time = int(elapsed_time)
+        td = timedelta(seconds=elapsed_time)
+        days, seconds = td.days, td.seconds
+        hours = seconds // 3600
+        minutes = (seconds % 3600) // 60
+        seconds = seconds % 60
+        formatted_time = ""
+
+        if days:
+            formatted_time += f"{days} days, "
+        if hours:
+            formatted_time += f"{hours} hours, "
+        if minutes:
+            formatted_time += f"{minutes} minutes, "
+        formatted_time += f"{seconds} seconds"
+
+        return formatted_time
 
     def validate(self, s):
         return (
@@ -141,7 +180,7 @@ class PasswordGame:
             print(
                 f"Rule 8: A wild {self.pokemon_name} appeared! Your password must include at least one of this Pokémon's type."
             )
-            return self.pokemon_types,self.pokemon_name
+            return self.pokemon_types, self.pokemon_name
 
         else:
             print(
@@ -151,7 +190,7 @@ class PasswordGame:
 
     def reset_pokemon(self):
         self.poke_counter = 0
-        self.pokemon_types,self.pokemon_name = self.fetch_random_pokemon()
+        self.pokemon_types, self.pokemon_name = self.fetch_random_pokemon()
 
     def wild_pokemon_reqs(self, s):
         if self.pokemon_types is None:
@@ -246,15 +285,6 @@ class PasswordGame:
             print(
                 "Rule 13: Your password must include the current time in `HH:MM` military time format."
             )
-            return False
-
-    def confirm(self, valid):
-        pyperclip.copy("")
-        confirm = input("Reenter password: ")
-        if confirm == valid:
-            return True
-        else:
-            print("Doesn't seem to be a match... Try again.")
             return False
 
 
