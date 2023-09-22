@@ -11,6 +11,7 @@ from pathlib import Path
 from datetime import datetime, timedelta
 from captcha.audio import AudioCaptcha
 from captcha.image import ImageCaptcha
+from colorama import Fore, Style
 from PIL import Image
 
 
@@ -27,29 +28,49 @@ class PasswordGame:
         self.min_length = 5
         self.max_length = 50
         self.confirm_time_limit = 30  # in seconds
+        self.banner = """
+        ┏┓┓┏ ┓ ┏┏┓┳┓┳┓  ┏┓┏┓┳┳┓┏┓
+        ┃┃┗┫ ┃┃┃┃┃┣┫┃┃  ┃┓┣┫┃┃┃┣ 
+        ┣┛┗┛•┗┻┛┗┛┛┗┻┛  ┗┛┛┗┛ ┗┗┛                                                                                                                                           
+        """
 
     def main(self):
-        print("Welcome to Py.word Game! Choose a password.")
+        print(Fore.GREEN + self.banner + Style.RESET_ALL)
+        print(
+            Fore.YELLOW
+            + "Welcome to Py.word Game! Choose a password."
+            + Style.RESET_ALL
+        )
         program_start_time = time.time()
         try:
             while True:
-                attempt = input("Password: ").strip()
+                attempt = input(Fore.BLUE + "Password: " + Style.RESET_ALL).strip()
                 if self.validate(attempt):
                     if self.confirm(attempt):
                         break
                 else:
                     pyperclip.copy(attempt)
                     print(
-                        "Last attempt copied to clipboard. Attempt again or Ctrl+C to quit."
+                        Style.DIM
+                        + "Last attempt copied to clipboard. Attempt again or Ctrl+C to quit."
+                        + Style.RESET_ALL
                     )
         except KeyboardInterrupt:
             self.clear_terminal()
-            print("\nProgram quit. Try to create a password again later!")
+            print(
+                Style.BRIGHT
+                + "Program quit. Try to create a password again later!"
+                + Style.RESET_ALL
+            )
+            sys.exit()
         program_elapsed_time = time.time() - program_start_time
         formatted_time = self.format_elapsed_time(program_elapsed_time)
         self.clear_terminal()
+        print(Fore.GREEN + self.banner + Style.RESET_ALL)
         sys.exit(
-            f'Congrats! Successfully created a password in {formatted_time}!\nPassword "{attempt}" is valid.\nWait... did we say that out loud?'
+            f"{Fore.GREEN}{Style.BRIGHT}✔ Congrats!{Style.NORMAL} Successfully created a password in {formatted_time}!\n"
+            f'Password {Style.BRIGHT}"{attempt}"{Style.NORMAL} is valid.\n'
+            f"{Style.DIM}Wait... did we say that out loud?{Style.RESET_ALL}"
         )
 
     def clear_terminal(self):
@@ -59,9 +80,9 @@ class PasswordGame:
         start_confirm_time = time.time()
         pyperclip.copy("")
         print(
-            f"You have {self.confirm_time_limit} seconds to manually reenter your password."
+            f"{Fore.CYAN}ℹ You have {self.confirm_time_limit} seconds to manually reenter your password."
         )
-        confirm = input("Reenter password: ")
+        confirm = input(Fore.BLUE + "Reenter Password: " + Style.RESET_ALL)
 
         confirm_elapsed_time = time.time() - start_confirm_time
 
@@ -69,7 +90,7 @@ class PasswordGame:
             return True
         else:
             print(
-                "Doesn't seem to be a match or time limit exceeded... Try again. Completely."
+                f"{Fore.RED}{Style.BRIGHT}✘ Password doesn't match or time limit exceeded. Please try again.{Style.RESET_ALL}."
             )
             return False
 
@@ -115,7 +136,7 @@ class PasswordGame:
         else:
             self.clear_terminal()
             print(
-                f"Rule 1: Password must be at least {self.min_length} characters long"
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 1:{Style.RESET_ALL} Password must be at least {self.min_length} characters long"
             )
             return False
 
@@ -124,7 +145,9 @@ class PasswordGame:
             return True
         else:
             self.clear_terminal()
-            print(f"Rule 2: Password has a {self.max_length} character limit")
+            print(
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 2:{Style.RESET_ALL} Password has a {self.max_length} character limit"
+            )
             return False
 
     def has_number_reqs(self, s):
@@ -133,7 +156,9 @@ class PasswordGame:
             return True
         else:
             self.clear_terminal()
-            print("Rule 3: Password must include a number.")
+            print(
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 3:{Style.RESET_ALL} Password must include a number."
+            )
             return False
 
     def has_special_reqs(self, s):
@@ -145,7 +170,7 @@ class PasswordGame:
         else:
             self.clear_terminal()
             print(
-                "Rule 4: Password must contain a special character and no whitespace."
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 4:{Style.RESET_ALL} Password must contain a special character and no whitespace."
             )
             return False
 
@@ -155,7 +180,9 @@ class PasswordGame:
             return True
         else:
             self.clear_terminal()
-            print("Rule 5: Password must contain an uppercase letter.")
+            print(
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 5:{Style.RESET_ALL} Password must contain an uppercase letter."
+            )
             return False
 
     def six_nine_reqs(self, s):
@@ -164,7 +191,9 @@ class PasswordGame:
             return True
         else:
             self.clear_terminal()
-            print("Rule 6: The digits in your password must add up to `69`.")
+            print(
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 6:{Style.RESET_ALL} The digits in your password must add up to `69`."
+            )
             return False
 
     def date_today_reqs(self, s):
@@ -173,7 +202,9 @@ class PasswordGame:
             return True
         else:
             self.clear_terminal()
-            print("Rule 7: Password must have the date today in `YYYY-MM-DD` format.")
+            print(
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 7:{Style.RESET_ALL} Password must have the date today in `YYYY-MM-DD` format."
+            )
             return False
 
     def fetch_random_pokemon(self):
@@ -194,7 +225,8 @@ class PasswordGame:
             img.show(title=self.pokemon_name)
             self.clear_terminal()
             print(
-                f"Rule 8: A wild {self.pokemon_name} appeared!\nYour password must include at least one of this Pokémon's type."
+                f"{Fore.CYAN}{Style.BRIGHT}❗ Rule 8:{Style.RESET_ALL} A wild {Style.BRIGHT}{self.pokemon_name}{Style.RESET_ALL} appeared!\n"
+                f"Your password must include at least one of this Pokémon's type."
             )
             return self.pokemon_types, self.pokemon_name
 
@@ -219,7 +251,9 @@ class PasswordGame:
                 poke_countdown = 3 - self.poke_counter
                 self.clear_terminal()
                 print(
-                    f"Rule 8: A wild {self.pokemon_name} appeared!\nYour password must include at least one of this Pokémon's type.(Regenerates in {poke_countdown} wrong type attempts)"
+                    f"{Fore.RED}{Style.BRIGHT}❗ Rule 8:{Style.RESET_ALL} A wild {Style.BRIGHT}{self.pokemon_name}{Style.RESET_ALL} appeared!\n"
+                    f"Your password must include at least one of this Pokémon's type.\n"
+                    f"{Style.DIM}(Regenerates in {poke_countdown} wrong type attempts){Style.RESET_ALL}"
                 )
                 if self.poke_counter == 3:
                     self.reset_pokemon()
@@ -254,7 +288,8 @@ class PasswordGame:
             captcha_countdown = 5 - self.captcha_counter
             self.clear_terminal()
             print(
-                f"Rule 9: Password must include the captcha in the `captcha.png`/`captcha.wav` in the same directory as this program. Regenerates in {captcha_countdown} wrong captcha attempts."
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 9:{Style.RESET_ALL} Password must include code in the {Fore.RED}`captcha.png`/`captcha.wav`{Style.RESET_ALL} in the same directory as this program.\n"
+                f"{Style.DIM}Regenerates in {captcha_countdown} wrong captcha attempts.{Style.RESET_ALL}"
             )
             if self.captcha_counter == 5:
                 print("Captcha reset!")
@@ -272,7 +307,7 @@ class PasswordGame:
         else:
             self.clear_terminal()
             print(
-                "Rule 10: Password must have the `flag emoji` of a country whose name/country code starts with the letter `P`."
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 10:{Style.RESET_ALL} Password must have the `flag emoji` of a country whose name/country code starts with the letter `P`."
             )
             return False
 
@@ -282,7 +317,9 @@ class PasswordGame:
             return True
         else:
             self.clear_terminal()
-            print("Rule 11: Password must include the `month` we're currently in.")
+            print(
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 11:{Style.RESET_ALL} Password must include the `month` we're currently in."
+            )
             return False
 
     def food_reqs(self, s):
@@ -295,7 +332,7 @@ class PasswordGame:
         else:
             self.clear_terminal()
             print(
-                "Rule 12: We've been here for so long… I'm hungry! Password must have a `food emoji`."
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 12:{Style.RESET_ALL} We've been here for so long… I'm hungry! Password must have a `food emoji`."
             )
             return False
 
@@ -306,7 +343,7 @@ class PasswordGame:
         else:
             self.clear_terminal()
             print(
-                "Rule 13: Your password must include the current time in `HH:MM` military time format."
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 13:{Style.RESET_ALL} Your password must include the current time in `HH:MM` military time format."
             )
             return False
 

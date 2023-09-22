@@ -22,6 +22,7 @@ My final project for Harvard's CS50 Python, heavily inspired by https://neal.fun
 ## someday:
 - [ ] add a GUI for easier input and prettier overall. Check out: [tkinter](https://docs.python.org/3/library/tkinter.html) or [PyQt](https://riverbankcomputing.com/software/pyqt/intro)
 - [ ] add a visual for the timer in the time requirement
+- [ ] add functionality to disable colored text
 
 
 ## Addtl notes:
