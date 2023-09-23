@@ -35,7 +35,7 @@ class PywordGame:
     3. Password must include a number
     4. Password must contain a special character and no whitespace
     5. Password must contain an uppercase letter
-    6. The digits in your password must add up to `69`
+    6. The digits in your password must add up to sum_digits variable
     7. Password must have the date today in `YYYY-MM-DD` format
     8. Password must include at least one of this Pokémon's type
     9. Password must include code in the `captcha.png`/`captcha.wav` in the same directory as this program
@@ -84,6 +84,7 @@ class PywordGame:
         self.pokemon_name = None  # Don't change this
         self.min_length = 5  # Difficulty
         self.max_length = 50  # Difficulty
+        self.sum_digits = 69  # Difficulty
         self.confirm_time_limit = 30  # in seconds
         self.banner = """
         ┏┓┓┏ ┓ ┏┏┓┳┓┳┓  ┏┓┏┓┳┳┓┏┓
@@ -228,7 +229,7 @@ class PywordGame:
             and self.has_number_reqs(s)
             and self.has_special_reqs(s)
             and self.has_upper_reqs(s)
-            and self.six_nine_reqs(s)
+            and self.sum_reqs(s)
             and self.date_today_reqs(s)
             and self.wild_pokemon_reqs(s)
             and self.captcha_reqs(s)
@@ -336,26 +337,26 @@ class PywordGame:
             )
             return False
 
-    def six_nine_reqs(self, s):
+    def sum_reqs(self, s):
         """
-        The digits in your password must add up to `69`.
+        The digits in your password must add up to the sum_digits variable whose default is 69.
 
         Args:
             s (str): The password created by the user.
 
         Returns:
-            bool: True if the digits in the password add up to `69`, otherwise False.
+            bool: True if the digits in the password add up to the sum_digits variable, otherwise False.
 
         Variables:
             digit_sum (int): The sum of the digits in the password.
         """
         digit_sum = sum(int(char) for char in s if char.isdigit())
-        if digit_sum == 69:
+        if digit_sum == self.sum_digits:
             return True
         else:
             self.clear_terminal()
             print(
-                f"{Fore.RED}{Style.BRIGHT}✘ Rule 6:{Style.RESET_ALL} The digits in your password must add up to `69`."
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 6:{Style.RESET_ALL} The digits in your password must add up to `{self.sum_digits}`."
                 # f"\n{Style.DIM} (Current sum: {digit_sum}){Style.RESET_ALL}" # Will this be too easy?
             )
             return False

@@ -63,7 +63,7 @@ The Py.word Game enforces the following rules for password creation:
 3. Password must include a `number`.
 4. Password must contain a `special` character and `no whitespace`.
 5. Password must contain an `uppercase` letter.
-6. The digits in your password must add up to `69`.
+6. The digits in your password must add up to the `self.digit_sum` whose default is `69`.
 7. Password must have the date today in `YYYY-MM-DD` format.
 8. Password must include at least one of a randomly generated Pokémon's `type`.
 9. Password must include the regenerating code in the `captcha.png`/`captcha.wav` in the same directory as this program.
@@ -124,8 +124,8 @@ python project.py
     > - Uses the `any()` function to check if any of the characters in the password is a special character and the `isspace()` function to check if any of the characters in the password is a whitespace. Rule 4.
 5. `has_upper_reqs`
     > - Uses the `any()` function to check if any of the characters in the password is an uppercase letter. Rule 5.
-6. `six_nine_reqs`
-    > - Iterates through each character in the password, assessing if it is a digit, and adding it to an expected value of `69`. Rule 6.
+6. `sum_reqs`
+    > - Iterates through each character in the password, assessing if it is a digit, and adding it to an expected value of `self.sum_digits` which defaults to `69`. Rule 6.
 7. `date_today_reqs`
     > - Uses the `datetime` library to get the current date and formatting it to `YYYY-MM-DD` str format, and checking if it is in the password. Rule 7.
 8. `fetch_random_pokemon`
@@ -256,7 +256,7 @@ python project.py
 - Hmm... needs more RGB. Add emojis that are red, green, and blue. (🔴🟢🔵)
 
 #### Addtl notes:
-- `Int`-based requirements, especially `Rule 6: sixNine` and `Rule 13: HH:MM` are quite the hassle later on (that's the point; should be a challenge) But I understand your struggle! (hell, imagine testing the code for yourself!); [this tool that I wrote](https://www.online-python.com/SEMPZn3TDb) (which is basically the `six_nine_reqs` function) would be useful just so editing attempts in real time would be less of a hassle since these requirements mingle, and you'll be out of the terminal.
+- `Int`-based requirements, especially `Rule 6: Sum` and `Rule 13: HH:MM` are quite the hassle later on (that's the point; should be a challenge) But I understand your struggle! (hell, imagine testing the code for yourself!); [this tool that I wrote](https://www.online-python.com/SEMPZn3TDb) (which is basically the `sum_reqs` function) would be useful just so editing attempts in real time would be less of a hassle since these requirements mingle, and you'll be out of the terminal.
 
 - Best to add the emojis in the beginning of the string. It's a hassle to use the arrow keys when passing over country flags and other emoji since it modifies it visually and turns out your cursor is not at right spot. (I'm not sure if this is a problem with my terminal or the code itself, but it's a problem nonetheless)
 

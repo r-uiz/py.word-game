@@ -93,7 +93,7 @@ def test_has_upper_reqs(game_instance):
     assert game_instance.has_upper_reqs(password)
 
 
-def test_six_nine_reqs(game_instance):
+def test_sum_reqs(game_instance):
     """
     Test the six_nine_reqs method.
 
@@ -101,11 +101,11 @@ def test_six_nine_reqs(game_instance):
     """
     # Case 1: Password's digits do not add up to 69 (should fail)
     password = "Password1"
-    assert not game_instance.six_nine_reqs(password)
+    assert not game_instance.sum_reqs(password)
 
     # Case 2: Password's digits add up to 69 (should pass)
     password = "Password99999996"
-    assert game_instance.six_nine_reqs(password)
+    assert game_instance.sum_reqs(password)
 
 
 def test_date_today_reqs(game_instance):
