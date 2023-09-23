@@ -1,4 +1,5 @@
 # Py.word Game - Password Creation and Validation Game
+[![wakatime](https://wakatime.com/badge/user/be00ec59-8c58-4a6d-b7bd-a8697292e551/project/c29db235-3b27-4be1-a5b5-82162d0cdf72.svg)](https://wakatime.com/badge/user/be00ec59-8c58-4a6d-b7bd-a8697292e551/project/c29db235-3b27-4be1-a5b5-82162d0cdf72)
 > Welcome to Py.word Game, a Python-based password creation and validation game! This project was created as a submission by r.\_.uiz for the CS50P course offered by Harvard University, heavily inspired by [neal.fun's version.](https://neal.fun/password-game/)
 
 ![Pyword Game Banner](banner.png)
@@ -235,6 +236,7 @@ python project.py
 - [ ] add functionality to disable colored text outputting (using argparse, for example)
     - [ ] with this, add configurability flags for any default values (like the max length of the password, number of tries for captcha, etc.)
 - [ ] completely disable clipboard pasting in confirm function (Can just be pasted again if you have a clipboard manager)
+    - [ ] In my terminal I could also just press the up arrow key to get the previous input, so maybe disable that too?
 - [ ] add more rules! [see below](#addtl-rule-ideas)
     - Hopefully more that requires user to search for a solution (like the pokemon one) on the Internet like neal.fun's version. (Chess notation, Geoguessr, etc.)
     - Even more interactive ones.

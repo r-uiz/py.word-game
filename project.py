@@ -356,6 +356,7 @@ class PywordGame:
             self.clear_terminal()
             print(
                 f"{Fore.RED}{Style.BRIGHT}✘ Rule 6:{Style.RESET_ALL} The digits in your password must add up to `69`."
+                # f"\n{Style.DIM} (Current sum: {digit_sum}){Style.RESET_ALL}" # Will this be too easy?
             )
             return False
 
