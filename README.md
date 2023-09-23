@@ -1,4 +1,4 @@
-# Py.word Game - Password Creation and Validation
+# Py.word Game - Password Creation and Validation Game
 > Welcome to Py.word Game, a Python-based password creation and validation game! This project was created as a submission by r.\_.uiz for the CS50P course offered by Harvard University, heavily inspired by [neal.fun's version.](https://neal.fun/password-game/)
 
 ![Pyword Game Banner](banner.png)
