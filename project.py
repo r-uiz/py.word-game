@@ -8,6 +8,8 @@ Important Notes:
     This is my first Python program, so I apologize for any bad practices.
     Feel free to leave any feedback on how I can improve my code!
 """
+# Q: What are the pip-installable libraries my project requires, one per line?
+# A: colorama, captcha, pyperclip
 import os  # Mainly for function clear_terminal()
 import sys  # For exiting the program in all cases
 import time  # For timing functions in rules and stats

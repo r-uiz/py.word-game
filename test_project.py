@@ -127,7 +127,11 @@ def test_date_today_reqs(game_instance):
 
     pass
 
+
 '''
+Currently do not have the skill to make tests for these methods.
+Will update this once I learn how to do it.
+
 def test_wild_pokemon_reqs(game_instance):
     """
     Test the wild_pokemon_reqs method.
@@ -178,6 +182,7 @@ def test_captcha_reqs(game_instance):
     assert game_instance.captcha_reqs(password)
 
 '''
+
 
 def test_flag_reqs(game_instance):
     """
