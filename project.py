@@ -2,25 +2,27 @@
 Welcome to Ruiz's final project submission for CS50P!
 This program is a password creation and validation game.
 
+Author: r._.uiz
+
 Important Notes:
-    This is my first time using Python, so I apologize for any bad practices.
-    Feel free to leave any feedback on how I can improve my code.
+    This is my first Python program, so I apologize for any bad practices.
+    Feel free to leave any feedback on how I can improve my code!
 """
-import os # Mainly for function clear_terminal()
-import sys # For exiting the program in all cases
+import os  # Mainly for function clear_terminal()
+import sys  # For exiting the program in all cases
 import time  # For timing functions in rules and stats
-import string # For string-related functions in rules
-import random # For generating captcha and random Pokémon
-import readline # Mainly for easier input editing using arrow keys
-import requests # Mainly for PokeAPI calls
-import pyperclip # For copying to clipboard
-from PIL import Image # Mainly for displaying Pokémon sprite
-from io import BytesIO # For captcha file generation using captcha library
-from pathlib import Path # Mainly for accessing voice-related resources
-from colorama import Fore, Style # For colored terminal text styling
-from captcha.audio import AudioCaptcha # For audio captcha generation
-from captcha.image import ImageCaptcha # For image captcha generation
-from datetime import datetime, timedelta # For date/time-related functions/rules
+import string  # For string-related functions in rules
+import random  # For generating captcha and random Pokémon
+import readline  # Mainly for easier input editing using arrow keys
+import requests  # Mainly for PokeAPI calls
+import pyperclip  # For copying to clipboard
+from PIL import Image  # Mainly for displaying Pokémon sprite
+from io import BytesIO  # For captcha file generation using captcha library
+from pathlib import Path  # Mainly for accessing voice-related resources
+from colorama import Fore, Style  # For colored terminal text styling
+from captcha.audio import AudioCaptcha  # For audio captcha generation
+from captcha.image import ImageCaptcha  # For image captcha generation
+from datetime import datetime, timedelta  # For date/time-related functions/rules
 
 
 class PywordGame:
@@ -45,6 +47,7 @@ class PywordGame:
     If the password doesn't follow a rule, it will ask the user to try again
     until all requirements are met.
     """
+
     def __init__(self):
         """
         Initializes a new instance of the PywordGame class.
@@ -64,19 +67,23 @@ class PywordGame:
             max_length (int): The maximum character limit for a valid password.
             confirm_time_limit (int): The time limit in seconds for confirming the password.
             banner (str): A string containing an ASCII art banner for the game.
+
+        Notes:
+            The captcha is pregenerated as the program initializes.
+            Variables with "# Difficulty" comments can be configured to change the difficulty of the game.
         """
         self.captcha_options = string.ascii_lowercase + string.digits
-        self.captcha_range = 5
+        self.captcha_range = 5  # Difficulty
         self.captcha = self.generate_captcha()
         self.voice_dir = Path.cwd() / "en"
-        self.captcha_counter = 0
-        self.captcha_attempt_limit = 5
-        self.poke_counter = 0
-        self.poke_attempt_limit = 3
-        self.pokemon_types = None
-        self.pokemon_name = None
-        self.min_length = 5
-        self.max_length = 50
+        self.captcha_counter = 0  # Starting value
+        self.captcha_attempt_limit = 5  # Difficulty
+        self.poke_counter = 0  # Starting value
+        self.poke_attempt_limit = 3  # Difficulty
+        self.pokemon_types = None  # Don't change this
+        self.pokemon_name = None  # Don't change this
+        self.min_length = 5  # Difficulty
+        self.max_length = 50  # Difficulty
         self.confirm_time_limit = 30  # in seconds
         self.banner = """
         ┏┓┓┏ ┓ ┏┏┓┳┓┳┓  ┏┓┏┓┳┳┓┏┓
@@ -88,7 +95,7 @@ class PywordGame:
         """
         The entry point of the PywordGame class and the main looping process.
 
-        Raises: 
+        Raises:
             KeyboardInterrupt: If the user presses Ctrl+C to quit the program.
 
         Variables:
@@ -96,7 +103,7 @@ class PywordGame:
             attempt (str): The user's attempt at creating a password.
             program_elapsed_time (float): The elapsed time of the program.
             formatted_time (str): The formatted elapsed time of the program.
-        
+
         Notes:
             Has ability to copy last attempt to clipboard.
             The program will automatically quit if the user successfully creates a password.
@@ -151,7 +158,7 @@ class PywordGame:
     def confirm(self, valid):
         """
         Prompt the user to reenter the valid password they created.
-        
+
         Args:
             valid (str): The valid password created by the user.
 
@@ -205,13 +212,13 @@ class PywordGame:
     def validate(self, s):
         """
         Validates the password created by the user against the rules of the game.
-        
+
         Args:
             s (str): The password created by the user.
-            
+
         Returns:
             bool: True if the password passes all the rules, otherwise False.
-            
+
         Notes:
             If the password doesn't pass a rule, it will print the rule and return False.
         """
@@ -237,7 +244,7 @@ class PywordGame:
 
         Args:
             s (str): The password created by the user.
-        
+
         Returns:
             bool: True if the password is at least 5 characters long, otherwise False.
         """
@@ -256,7 +263,7 @@ class PywordGame:
 
         Args:
             s (str): The password created by the user.
-        
+
         Returns:
             bool: True if the password is at most 50 characters long, otherwise False.
         """
@@ -275,7 +282,7 @@ class PywordGame:
 
         Args:
             s (str): The password created by the user.
-        
+
         Returns:
             bool: True if the password includes a number, otherwise False.
         """
@@ -294,7 +301,7 @@ class PywordGame:
 
         Args:
             s (str): The password created by the user.
-        
+
         Returns:
             bool: True if the password contains a special character and no whitespace, otherwise False.
         """
@@ -316,7 +323,7 @@ class PywordGame:
 
         Args:
             s (str): The password created by the user.
-        
+
         Returns:
             bool: True if the password contains an uppercase letter, otherwise False.
         """
@@ -335,10 +342,10 @@ class PywordGame:
 
         Args:
             s (str): The password created by the user.
-        
+
         Returns:
             bool: True if the digits in the password add up to `69`, otherwise False.
-        
+
         Variables:
             digit_sum (int): The sum of the digits in the password.
         """
@@ -358,10 +365,10 @@ class PywordGame:
 
         Args:
             s (str): The password created by the user.
-        
+
         Returns:
             bool: True if the password has the date today in `YYYY-MM-DD` format, otherwise False.
-        
+
         Variables:
             str_today (str): The date today in `YYYY-MM-DD` format.
         """
@@ -446,7 +453,7 @@ class PywordGame:
 
         Args:
             s (str): The password created by the user.
-        
+
         Returns:
             bool: True if the password includes at least one of the Pokémon's type, otherwise False.
 
@@ -566,7 +573,7 @@ class PywordGame:
             captcha_counter (int): The counter for captcha attempts.
             captcha_attempt_limit (int): The limit for captcha attempts.
             captcha_countdown (int): The number of attempts left before the captcha is reset.
-            
+
         Notes:
             If the captcha is not in the password, it will increment the captcha_counter.
             If the captcha_counter reaches the captcha_attempt_limit, it will reset the captcha through reset_captcha().
@@ -594,7 +601,7 @@ class PywordGame:
 
         Returns:
             bool: True if the password includes a flag emoji of a country whose name/country code starts with the letter `P`, otherwise False.
-        
+
         Variables:
             list_valid_flag (List[str]): A list of valid flag emojis of countries whose name/country code starts with the letter `P`.
 
@@ -650,7 +657,7 @@ class PywordGame:
 
         Returns:
             bool: True if the password has a `food emoji`, otherwise False.
-        
+
         Variables:
             list_valid_food (List[str]): A list of valid food emojis.
 
@@ -676,7 +683,7 @@ class PywordGame:
 
         Args:
             s (str): The password created by the user.
-        
+
         Returns:
             bool: True if the password includes the current time in `HH:MM` military time format, otherwise False.
 

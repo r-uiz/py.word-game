@@ -25,6 +25,8 @@ My final project for Harvard's CS50 Python, heavily inspired by https://neal.fun
 - [ ] completely disable clipboard pasting in confirm function (Can just be pasted again if you have a clipboard manager)
 - [ ] add funnier announcement at the end
 - [ ] add more rules! [[README.md#addtl-rule-ideas|see below]]
+    - Hopefully more that requires user to search for a solution (like the pokemon one) on the Internet like neal.fun's version. (Chess notation, Geoguessr, etc.)
+    - Even more interactive ones.
 - [ ] add a GUI for easier input and prettier overall. Check out: [tkinter](https://docs.python.org/3/library/tkinter.html) or [PyQt](https://riverbankcomputing.com/software/pyqt/intro)
 
 
@@ -43,3 +45,7 @@ My final project for Harvard's CS50 Python, heavily inspired by https://neal.fun
 - include total length of password (will mess with current answers in int-based reqs)
 - must include a palindrome that has a minimum of 5 characters and is not a number.
 - With the given set of ten letters, must include a valid word that uses some of the letters given. Regenerates new set every time you get it wrong.(easier reset if impossible to make word)
+- give broken code. add the solution
+- randomly generate a chess board and ask for a best move (maybe use chess notation)
+- randomly generate emoji set and ask for what movie it means (🚢🧊💔 = Titanic)
+- Hmm... needs more RGB. Add emojis that are red, green, and blue. (🔴🟢🔵)
