@@ -35,7 +35,7 @@ class PywordGame:
     3. Password must include a number
     4. Password must contain a special character and no whitespace
     5. Password must contain an uppercase letter
-    6. The digits in your password must add up to sum_digits variable
+    6. The digits in your password must add up to `sum_target` variable
     7. Password must have the date today in `YYYY-MM-DD` format
     8. Password must include at least one of this Pokémon's type
     9. Password must include code in the `captcha.png`/`captcha.wav` in the same directory as this program
@@ -84,7 +84,7 @@ class PywordGame:
         self.pokemon_name = None  # Don't change this
         self.min_length = 5  # Difficulty
         self.max_length = 50  # Difficulty
-        self.sum_digits = 69  # Difficulty
+        self.sum_target = 69  # Difficulty; hardest when lower
         self.confirm_time_limit = 30  # in seconds
         self.banner = """
         ┏┓┓┏ ┓ ┏┏┓┳┓┳┓  ┏┓┏┓┳┳┓┏┓
@@ -339,24 +339,25 @@ class PywordGame:
 
     def sum_reqs(self, s):
         """
-        The digits in your password must add up to the sum_digits variable whose default is 69.
+        The digits in your password must add up to the sum_target variable whose default is 69.
 
         Args:
             s (str): The password created by the user.
 
         Returns:
-            bool: True if the digits in the password add up to the sum_digits variable, otherwise False.
+            bool: True if the digits in the password add up to the sum_target variable, otherwise False.
 
         Variables:
             digit_sum (int): The sum of the digits in the password.
+            sum_target (int): The target sum of the digits in the password.
         """
         digit_sum = sum(int(char) for char in s if char.isdigit())
-        if digit_sum == self.sum_digits:
+        if digit_sum == self.sum_target:
             return True
         else:
             self.clear_terminal()
             print(
-                f"{Fore.RED}{Style.BRIGHT}✘ Rule 6:{Style.RESET_ALL} The digits in your password must add up to `{self.sum_digits}`."
+                f"{Fore.RED}{Style.BRIGHT}✘ Rule 6:{Style.RESET_ALL} The digits in your password must add up to `{self.sum_target}`."
                 # f"\n{Style.DIM} (Current sum: {digit_sum}){Style.RESET_ALL}" # Will this be too easy?
             )
             return False

@@ -95,9 +95,9 @@ def test_has_upper_reqs(game_instance):
 
 def test_sum_reqs(game_instance):
     """
-    Test the six_nine_reqs method.
+    Test the sum_reqs method.
 
-    Note: Digits must add up to 69.
+    Note: The sum of the digits in the password must be equal to the configurable `sum_target` whose default is 69.
     """
     # Case 1: Password's digits do not add up to 69 (should fail)
     password = "Password1"
