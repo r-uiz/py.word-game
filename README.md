@@ -32,7 +32,8 @@
 Trying to up your account security? Look no further. These curious rules for a password will surely be enough. Heavily inspired by [The Password Game](https://neal.fun/password-game/) by [neal.fun](https://neal.fun/), Py.word Game is a password creation and validation game that challenges users to create a secure password while following unique a set of rules. 
 
 ### Video Demo:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/K5iJ58lpFDo?si=WPPcilWm7WF04vNl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+[![Watch demo on Youtube](http://img.youtube.com/vi/K5iJ58lpFDo/0.jpg)](http://www.youtube.com/watch?v=K5iJ58lpFDo "Py.word Game - A CS50P Final Project Submission by r-uiz")
 
 **[Py.word Game by r-uiz | YouTube](https://youtu.be/K5iJ58lpFDo?si=GVKJGiddH_89doB1)**
 
