@@ -110,7 +110,17 @@ python project.py
 
 2.  Follow the on-screen instructions to create a password that meets all the specified rules.
 
-3.  Once you successfully create a valid password, the game will display a success message along with the time you took to complete the game.
+3. Attempts will be copied to your clipboard for easy re-entry. 
+    > If you want to disable this, you can comment out the `pyperclip.copy()` lines in the source code.
+
+4.  Once you successfully create a valid password, the game will display a success message along with the time you took to complete the game.
+
+### Error Handling
+- If you encounter any errors while running the program, please open an issue or submit a pull request.
+- If it raises a NotImplementedError:
+    - You may get an error message that says: “Pyperclip could not find a copy/paste mechanism for your system. Please see https://pyperclip.readthedocs.io/en/latest/introduction.html#not-implemented-error for how to fix this.”
+    - This will also happen if project is run in a CS50 codespace, which runs without a GUI. If you run it locally using the instructions in the [Installation](#installation) section, it should work.
+    - This is because Pyperclip works by accessing the clipboard of your computer, and different operating systems have different ways of accessing that clipboard. The link in the error message will provide you with instructions on how to fix this issue.
 
 ---
 ## Technical Documentation
