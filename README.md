@@ -63,7 +63,7 @@ The Py.word Game enforces the following rules for password creation:
 3. Password must include a `number`.
 4. Password must contain a `special` character and `no whitespace`.
 5. Password must contain an `uppercase` letter.
-6. The digits in your password must add up to the `self.digit_sum` whose default is `69`.
+6. The digits in your password must add up to the `self.sum_target` whose default is `69`.
 7. Password must have the date today in `YYYY-MM-DD` format.
 8. Password must include at least one of a randomly generated Pokémon's `type`.
 9. Password must include the regenerating code in the `captcha.png`/`captcha.wav` in the same directory as this program.
@@ -125,7 +125,7 @@ python project.py
 5. `has_upper_reqs`
     > - Uses the `any()` function to check if any of the characters in the password is an uppercase letter. Rule 5.
 6. `sum_reqs`
-    > - Iterates through each character in the password, assessing if it is a digit, and adding it to an expected value of `self.sum_digits` which defaults to `69`. Rule 6.
+    > - Iterates through each character in the password, assessing if it is a digit, and adding it to a configurable expected value of `self.sum_target` which defaults to `69`. Rule 6.
 7. `date_today_reqs`
     > - Uses the `datetime` library to get the current date and formatting it to `YYYY-MM-DD` str format, and checking if it is in the password. Rule 7.
 8. `fetch_random_pokemon`
@@ -195,7 +195,9 @@ python project.py
     > - Configurable default value for the `min_length_reqs` function. Defaults to 5.
 6. `self.max_length`
     > - Configurable default value for the `max_length_reqs` function. Defaults to 50.
-7. `self.confirm_time_limit`
+7. `self.sum_target`
+    > - Configurable default value for the `sum_reqs` function. Defaults to 69.
+8. `self.confirm_time_limit`
     > - Configurable default value for the `confirm` function. Defaults to 30 seconds.
 
 ### Pip-Installable Dependencies

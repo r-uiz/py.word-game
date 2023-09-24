@@ -94,7 +94,7 @@ class PywordGame:
 
     def main(self):
         """
-        The entry point of the PywordGame class and the main looping process.
+        The entry point of the Py.wordGame class and the main looping process.
 
         Raises:
             KeyboardInterrupt: If the user presses Ctrl+C to quit the program.
