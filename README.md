@@ -2,7 +2,7 @@
 [![wakatime](https://wakatime.com/badge/user/be00ec59-8c58-4a6d-b7bd-a8697292e551/project/c29db235-3b27-4be1-a5b5-82162d0cdf72.svg)](https://wakatime.com/badge/user/be00ec59-8c58-4a6d-b7bd-a8697292e551/project/c29db235-3b27-4be1-a5b5-82162d0cdf72)
 > Welcome to Py.word Game, a Python-based password creation and validation game! This project was created as a submission by r.\_.uiz for the CS50P course offered by Harvard University, heavily inspired by [neal.fun's version.](https://neal.fun/password-game/)
 
-![Pyword Game Banner](banner.png)
+![Py.word Game Banner](banner.png)
 
 - **Author:** r.\_.uiz
 - **GitHub Profile:** [r._.uiz on GitHub](https://github.com/r-uiz)
@@ -29,9 +29,9 @@
 
 ---
 ## About the Project
-Trying to up your account security? Look no further. These curious rules for a password will surely be enough. Heavily inspired by [The Password Game](https://neal.fun/password-game/) by [neal.fun](https://neal.fun/), the Py.word Game is a password creation and validation game that challenges users to create a secure password while following a set of rules. 
+Trying to up your account security? Look no further. These curious rules for a password will surely be enough. Heavily inspired by [The Password Game](https://neal.fun/password-game/) by [neal.fun](https://neal.fun/), Py.word Game is a password creation and validation game that challenges users to create a secure password while following unique a set of rules. 
 
-#### Video Demo:  <URL HERE>
+### Video Demo:  <URL HERE>
 
 
 > Created to fulfill the [requirements](https://cs50.harvard.edu/python/2022/project/) for [Harvard's CS50P](https://pll.harvard.edu/course/cs50s-introduction-programming-python), a Computer Science course focused on [Python](https://www.python.org/).
@@ -56,14 +56,14 @@ captcha
 ## Game Rules
 > Don't ruin the fun! Play the game first before reading this section ;)
 
-The Py.word Game enforces the following rules for password creation:
+The Py.word Game enforces the following requirements for a valid password:
 
-1. Password must be at least `5` characters long.
-2. Password has a `50` character limit.
+1. Password must be at least `5` characters long (configurable).
+2. Password has a `50` character limit (configurable).
 3. Password must include a `number`.
 4. Password must contain a `special` character and `no whitespace`.
 5. Password must contain an `uppercase` letter.
-6. The digits in your password must add up to the `self.sum_target` whose default is `69`.
+6. The digits in your password must add up to `69` (configurable).
 7. Password must have the date today in `YYYY-MM-DD` format.
 8. Password must include at least one of a randomly generated Pokémon's `type`.
 9. Password must include the regenerating code in the `captcha.png`/`captcha.wav` in the same directory as this program.
@@ -72,11 +72,11 @@ The Py.word Game enforces the following rules for password creation:
 12. Password must have a `food emoji`.
 13. Password must include the current time in `HH:MM` military time format.
 
-If the password doesn't follow a rule, the user will be prompted to try again until all requirements are met.
+If the password doesn't follow a rule, the user will be prompted to try again until all requirements are met, or until the user quits the program.
 
 ---
 ## Getting Started
-- To get started with the Pyword Game, you'll need a Python environment set up on your computer. 
+- To get started with the Py.word Game, you'll need a Python environment set up on your computer. 
 ### Installation
 
 1. Clone the repository to your local machine:
@@ -98,7 +98,7 @@ pip install -r requirements.txt
 ```
 
 ### Usage
-1. Run the Pyword Game:
+1. Run the Py.word Game:
 
 ```bash
 python project.py
