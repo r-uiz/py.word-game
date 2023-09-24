@@ -31,8 +31,10 @@
 ## About the Project
 Trying to up your account security? Look no further. These curious rules for a password will surely be enough. Heavily inspired by [The Password Game](https://neal.fun/password-game/) by [neal.fun](https://neal.fun/), Py.word Game is a password creation and validation game that challenges users to create a secure password while following unique a set of rules. 
 
-### Video Demo:  <URL HERE>
+### Video Demo:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/K5iJ58lpFDo?si=WPPcilWm7WF04vNl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
+**[Py.word Game by r-uiz | YouTube](https://youtu.be/K5iJ58lpFDo?si=GVKJGiddH_89doB1)**
 
 > Created to fulfill the [requirements](https://cs50.harvard.edu/python/2022/project/) for [Harvard's CS50P](https://pll.harvard.edu/course/cs50s-introduction-programming-python), a Computer Science course focused on [Python](https://www.python.org/).
 
