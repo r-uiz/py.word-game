@@ -10,13 +10,15 @@
 
 ## Table of Contents
 - [About the Project](#about-the-project)
+    - [Video Demo](#video-demo)
     - [Important Notes](#important-notes)
     - [Required Libraries](#required-libraries)
 - [Game Rules](#game-rules)
 - [Getting Started](#getting-started)
     - [Installation](#installation)
     - [Usage](#usage)
-- [Documentation](#documentation)
+    - [Error Handling](#error-handling)
+- [Technical Documentation](#technical-documentation)
     - [Functions](#functions)
     - [Configurable Default Variables](#configurable-default-variables)
     - [Pip-Installable Dependencies](#pip-installable-dependencies)
@@ -26,6 +28,8 @@
         - [Addtl rule ideas](#addtl-rule-ideas)
         - [Addtl notes](#addtl-notes)
 - [Contributions](#contributions)
+    - [Contribution Guidelines](#contribution-guidelines)
+
 
 ---
 ## About the Project
