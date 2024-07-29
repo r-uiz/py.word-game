@@ -2,3 +2,4 @@ captcha.wav
 captcha.png
  __pycache__/
 banner.py
+.DS_Store
